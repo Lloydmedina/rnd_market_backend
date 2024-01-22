@@ -32,7 +32,7 @@ exports.signin = async (req, res) => {
         });
       
       }
-      console.log(user)
+      //console.log(user)
       const token = jwt.sign({ id: user.id },
             config.secret,
             {
@@ -53,7 +53,7 @@ exports.signin = async (req, res) => {
       });
       
     } catch (error) {
-      console.log(error);
+     // console.log(error);
       return res.status(500).send({ message: error.message });
   }
   
