@@ -4,7 +4,7 @@ const cookieSession = require("cookie-session");
 const db = require("./app/models");
 const Role = db.role;
 const app = express();
-
+const users = require('./app/routes/user');
 app.use(cors());
 
 // parse requests of content-type - application/json
@@ -20,13 +20,14 @@ app.use(
     httpOnly: true,
   })
 );
-
+// users route
+app.use("/api/users",users);
 // simple route
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to RND API." });
 });
+//auth route
 require('./app/routes/auth.routes')(app);
-require('./app/routes/user.routes')(app);
 // set port, listen for requests
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
