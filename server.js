@@ -7,6 +7,7 @@ const app = express();
 const users = require('./app/routes/user');
 const employee = require('./app/routes/employee');
 const person = require('./app/routes/person');
+const office = require('./app/routes/office');
 app.use(cors());
 
 // parse requests of content-type - application/json
@@ -30,6 +31,9 @@ app.use("/api/employee", employee);
 
 //person routee
 app.use("/api/person", person);
+
+//office route
+app.use("/api/office", office);
 
 // simple route
 app.get("/", (req, res) => {
