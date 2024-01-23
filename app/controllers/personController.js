@@ -6,7 +6,7 @@ async function getAllPerson (req, res) {
   try {
     const queryString = `SELECT * FROM ${table}`;
     const queryData = await db.executeQuery(queryString);
-    console.log(queryData);
+   // console.log(queryData);
     res.send(queryData);
   } catch (err) {
     console.error(err);
@@ -20,7 +20,7 @@ async function findPerson(req, res) {
   try {
     const queryString = `SELECT * FROM ${table} WHERE id ='${pId}'`;
     const queryData = await db.executeQuery(queryString);
-    console.log(queryData);
+   // console.log(queryData);
     res.send(queryData);
   } catch (err) {
     console.error(err);

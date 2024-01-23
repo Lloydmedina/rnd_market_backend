@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../config/market_connect");
-const table = "property_type";
+const table = 'property_lot_unit';
 async function getAll (req, res) {
   try {
     const queryString = `SELECT * FROM ${table}`;
     const queryData = await db.executeQuery(queryString);
-    //console.log(queryData);
+    console.log(queryData);
     res.send(queryData);
   } catch (err) {
     console.error(err);
@@ -20,7 +20,7 @@ async function findOne(req, res) {
   try {
     const queryString = `SELECT * FROM ${table} WHERE id ='${id}'`;
     const queryData = await db.executeQuery(queryString);
-   // console.log(queryData);
+    console.log(queryData);
     res.send(queryData);
   } catch (err) {
     console.error(err);

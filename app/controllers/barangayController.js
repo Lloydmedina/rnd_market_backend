@@ -6,7 +6,7 @@ async function getAll (req, res) {
   try {
     const queryString = `SELECT * FROM barangay`;
     const queryData = await db.executeQuery(queryString);
-    console.log(queryData);
+  //  console.log(queryData);
     res.send(queryData);
   } catch (err) {
     console.error(err);
@@ -20,7 +20,7 @@ async function findOne(req, res) {
   try {
     const queryString = `SELECT * FROM barangay WHERE id ='${pId}'`;
     const queryData = await db.executeQuery(queryString);
-    console.log(queryData);
+  //  console.log(queryData);
     res.send(queryData);
   } catch (err) {
     console.error(err);

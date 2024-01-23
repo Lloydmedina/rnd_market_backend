@@ -7,7 +7,7 @@ async function getAllEmployee (req, res) {
   try {
     const queryString = `SELECT * FROM employee`;
     const queryData = await db.executeQuery(queryString);
-    console.log(queryData);
+  //  console.log(queryData);
     res.send(queryData);
   } catch (err) {
     console.error(err);
@@ -21,7 +21,7 @@ async function findEmployee(req, res) {
   try {
     const queryString = `SELECT * FROM employee WHERE id ='${eId}'`;
     const queryData = await db.executeQuery(queryString);
-    console.log(queryData);
+  //  console.log(queryData);
     res.send(queryData);
   } catch (err) {
     console.error(err);
