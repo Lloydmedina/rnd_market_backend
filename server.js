@@ -6,6 +6,7 @@ const Role = db.role;
 const app = express();
 const users = require('./app/routes/user');
 const employee = require('./app/routes/employee');
+const person = require('./app/routes/person');
 app.use(cors());
 
 // parse requests of content-type - application/json
@@ -23,14 +24,21 @@ app.use(
 );
 // users route
 app.use("/api/users", users);
+
 //employee route
 app.use("/api/employee", employee);
+
+//person routee
+app.use("/api/person", person);
+
 // simple route
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to RND API." });
 });
+
 //auth route
 require('./app/routes/auth.routes')(app);
+
 // set port, listen for requests
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
