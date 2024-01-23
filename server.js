@@ -5,6 +5,7 @@ const db = require("./app/models");
 const Role = db.role;
 const app = express();
 const users = require('./app/routes/user');
+const employee = require('./app/routes/employee');
 app.use(cors());
 
 // parse requests of content-type - application/json
@@ -21,7 +22,9 @@ app.use(
   })
 );
 // users route
-app.use("/api/users",users);
+app.use("/api/users", users);
+//employee route
+app.use("/api/employee", employee);
 // simple route
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to RND API." });
