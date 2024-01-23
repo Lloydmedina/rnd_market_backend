@@ -27,7 +27,7 @@ WHERE
 ORDER BY
     u.id `;
     const queryData = await db.executeQuery(queryString);
-    console.log(queryData);
+   // console.log(queryData);
     res.send(queryData);
   } catch (err) {
     console.error(err);
@@ -38,7 +38,7 @@ async function getAllUsersRoles(req, res) {
   try {
     const queryString = `SELECT * FROM role`;
     const queryData = await db.executeQuery(queryString);
-    console.log(queryData);
+//console.log(queryData);
     res.send(queryData);
   } catch (err) {
     console.error(err);
@@ -49,7 +49,7 @@ async function getUsersRequest(req, res) {
   try {
     const queryString = `SELECT * FROM users_request`;
     const queryData = await db.executeQuery(queryString);
-    console.log(queryData);
+//console.log(queryData);
     res.send(queryData);
   } catch (err) {
     console.error(err);
@@ -76,7 +76,7 @@ WHERE
 ORDER BY
     u.id `;
     const queryData = await db.executeQuery(queryString);
-    console.log(queryData);
+//console.log(queryData);
     res.send(queryData);
   } catch (err) {
     console.error(err);
