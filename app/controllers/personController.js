@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../config/db_connect");
-
+const table = "person";
 async function getAllPerson (req, res) {
   try {
-    const queryString = `SELECT * FROM person`;
+    const queryString = `SELECT * FROM ${table}`;
     const queryData = await db.executeQuery(queryString);
     console.log(queryData);
     res.send(queryData);
@@ -18,7 +18,7 @@ async function getAllPerson (req, res) {
 async function findPerson(req, res) {
   const pId = req.params.pId;
   try {
-    const queryString = `SELECT * FROM person WHERE id ='${pId}'`;
+    const queryString = `SELECT * FROM ${table} WHERE id ='${pId}'`;
     const queryData = await db.executeQuery(queryString);
     console.log(queryData);
     res.send(queryData);

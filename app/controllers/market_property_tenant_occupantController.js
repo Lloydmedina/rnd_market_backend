@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../config/market_connect");
-
+const table = 'property_tenant_occupant'
 async function getAll (req, res) {
   try {
-    const queryString = `SELECT * FROM property_tenant_occupant`;
+    const queryString = `SELECT * FROM ${table}`;
     const queryData = await db.executeQuery(queryString);
     console.log(queryData);
     res.send(queryData);
@@ -18,7 +18,7 @@ async function getAll (req, res) {
 async function findOne(req, res) {
   const id = req.params.id;
   try {
-    const queryString = `SELECT * FROM property_tenant_occupant WHERE id ='${id}'`;
+    const queryString = `SELECT * FROM ${table} WHERE id ='${id}'`;
     const queryData = await db.executeQuery(queryString);
     console.log(queryData);
     res.send(queryData);

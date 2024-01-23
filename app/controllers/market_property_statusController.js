@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../config/market_connect");
-const table = "property_type";
+const table = 'property_status';
 async function getAll (req, res) {
   try {
     const queryString = `SELECT * FROM ${table}`;
