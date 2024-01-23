@@ -56,7 +56,7 @@ app.use("/api/market_property_type", market_property_type);
 app.use("/api/market_property_tenant", market_property_tenant);
 app.use("/api/market_property_tenant_occupant", market_property_tenant_occupant);
 app.use("/api/market_property_status", market_property_status);
-// app.use("/api/market_property_setup", market_property_setup);
+app.use("/api/market_property_setup", market_property_setup);
 // app.use("/api/market_property_section", market_property_section);
 // app.use("/api/market_property_lot_unit", market_property_lot_unit);
 // app.use("/api/market_property_floor_block", market_property_floor_block.js);
