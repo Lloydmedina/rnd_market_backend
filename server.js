@@ -60,7 +60,7 @@ app.use("/api/market_property_setup", market_property_setup);
 app.use("/api/market_property_section", market_property_section);
 app.use("/api/market_property_lot_unit", market_property_lot_unit);
 app.use("/api/market_property_floor_block", market_property_floor_block);
-// app.use("/api/market_payment_schedule", market_payment_schedule);
+app.use("/api/market_payment_schedule", market_payment_schedule);
 // app.use("/api/market_payment_addons", market_payment_addons);
 // app.use("/api/market_inspect_logs", market_inspect_logs);
 
