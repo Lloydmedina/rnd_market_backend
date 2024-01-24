@@ -101,10 +101,24 @@ ORDER BY
     console.error(err);
     res.status(400).send({ error: "Server error: Error grabbing residents" });
   }
+}
+async function getSyslogs(req, res) {
+  try {
+    const queryString = `
+    SELECT a.*, b.log_title FROM logs a LEFT JOIN log_type b on a.log_type = b.log_id ORDER BY a.created_at DESC
+    `;
+    const queryData = await db.executeQuery(queryString);
+//console.log(queryData);
+    res.send(queryData);
+  } catch (err) {
+    console.error(err);
+    res.status(400).send({ error: "Server error: Error grabbing residents" });
+  }
  }
 module.exports = {
   findUser,
   getAllUsers,
   getAllUsersRoles,
-  getUsersRequest
+  getUsersRequest,
+  getSyslogs
 };
