@@ -47,7 +47,26 @@ async function getAllUsersRoles(req, res) {
 }
 async function getUsersRequest(req, res) {
   try {
-    const queryString = `SELECT * FROM users_request`;
+    const queryString = `
+    SELECT 
+  req.*, 
+  u.fullName,
+  u.username,
+  u.position,
+  r.name AS role_name, 
+  o.name AS office_name
+FROM 
+  users_request req
+LEFT JOIN 
+  role r ON req.roleId = r.id
+LEFT JOIN 
+  users u ON req.user_id = u.id
+	LEFT JOIN 
+  office o ON u.officeId = o.id
+ORDER BY req.created_at DESC  
+  ;
+
+    `;
     const queryData = await db.executeQuery(queryString);
 //console.log(queryData);
     res.send(queryData);
