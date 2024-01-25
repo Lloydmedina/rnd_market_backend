@@ -4,7 +4,7 @@ const db = require("../config/db_connect");
 const table = "office";
 async function getAllOffice (req, res) {
   try {
-    const queryString = `SELECT * FROM ${table}`;
+    const queryString = `SELECT id,description,short_name FROM ${table}`;
     const queryData = await db.executeQuery(queryString);
   //  console.log(queryData);
     res.send(queryData);
@@ -16,9 +16,9 @@ async function getAllOffice (req, res) {
 
 
 async function findOffice(req, res) {
-  const pId = req.params.pId;
+  const id = req.params.id;
   try {
-    const queryString = `SELECT * FROM ${table} WHERE id ='${pId}'`;
+    const queryString = `SELECT * FROM ${table} WHERE id ='${id}'`;
     const queryData = await db.executeQuery(queryString);
 //    console.log(queryData);
     res.send(queryData);
