@@ -1,8 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../config/db_connect");
-
+const changePassword_ = require("../models/changepass")
+const User = db.user;
 const table = "users";
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 async function getAllUsers(req, res) {
   try {
     const queryString = `SELECT
@@ -75,7 +78,6 @@ ORDER BY req.created_at DESC
     res.status(400).send({ error: "Server error: Error grabbing residents" });
   }
 }
-
 async function findUser(req, res) {
   const uId = req.params.uId;
   try {
@@ -114,11 +116,38 @@ async function getSyslogs(req, res) {
     console.error(err);
     res.status(400).send({ error: "Server error: Error grabbing residents" });
   }
- }
+}
+async function changePassword(req, res) { 
+  const reqJson = db.filterReqJson(req.body, changePassword_);
+  const userId = reqJson.id;
+  const newPassword = reqJson.password;
+  try {
+
+    const query = `SELECT * FROM ${table} WHERE id = ${userId}`;
+    const user_ = await db.executeQuery(query);
+    if (!user_) {
+      return res.status(404).send({ message: "User Not found." });
+    } else { 
+
+      const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+      const change_query = `
+      UPDATE ${table} SET password ='${hashedNewPassword}', default_pass = 'NO', first_login = 'FALSE' WHERE id = ${userId}`;
+      const result_ = await db.executeQuery(change_query);
+      res.send(result_);
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(400).send({ error: "Server error: Error grabbing user" });
+  }
+  
+
+}
+
 module.exports = {
   findUser,
   getAllUsers,
   getAllUsersRoles,
   getUsersRequest,
-  getSyslogs
+  getSyslogs,
+  changePassword
 };
