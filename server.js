@@ -8,6 +8,7 @@ const users = require('./app/routes/user');
 const employee = require('./app/routes/employee');
 const person = require('./app/routes/person');
 const office = require('./app/routes/office');
+const access = require('./app/routes/userAccess');
 
 const market_property_type = require('./app/routes/market_property_type');
 const market_property_tenant_occupant = require('./app/routes/market_property_tenant_occupant');
@@ -20,6 +21,8 @@ const market_property_floor_block = require('./app/routes/market_property_floor_
 const market_payment_schedule = require('./app/routes/market_payment_schedule');
 const market_payment_addons = require('./app/routes/market_payment_addons');
 const market_inspect_logs = require('./app/routes/market_inspect_logs');
+
+const system_logs = require('./app/routes/sys_logs')
 app.use(cors());
 
 // parse requests of content-type - application/json
@@ -50,6 +53,8 @@ app.use("/api/person", person);
 
 //office route
 app.use("/api/office", office);
+//user access route
+app.use("/api/access",access);
 
 //market routes
 app.use("/api/market_property_type", market_property_type);
@@ -67,6 +72,8 @@ app.use("/api/market_inspect_logs", market_inspect_logs);
 //auth route
 require('./app/routes/auth.routes')(app);
 
+//system logs
+app.use("/api/system_logs", system_logs);
 // set port, listen for requests
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

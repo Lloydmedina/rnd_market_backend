@@ -5,7 +5,7 @@ const dbPool = mysql.createPool({
     host: db.HOST,
     user: db.USER,
     password: db.PASSWORD,
-    database: db.DB,
+    database: db.HR_DB,
     port: db.PORT,
     connectionLimit: 500,
 })
@@ -22,7 +22,6 @@ async function executeQuery(query, values = []) {
     catch (err) {
         console.error(err)
         if(connection) {
-            connection.release(),
             connection.release()
         }
     }
