@@ -22,6 +22,7 @@ async function executeQuery(query, values = []) {
     catch (err) {
         console.error(err)
         if(connection) {
+            connection.release(),
             connection.release()
         }
     }

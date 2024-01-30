@@ -8,6 +8,7 @@ const users = require('./app/routes/user');
 const employee = require('./app/routes/employee');
 const person = require('./app/routes/person');
 const office = require('./app/routes/office');
+const access = require('./app/routes/userAccess');
 
 const market_property_type = require('./app/routes/market_property_type');
 const market_property_tenant_occupant = require('./app/routes/market_property_tenant_occupant');
@@ -52,6 +53,8 @@ app.use("/api/person", person);
 
 //office route
 app.use("/api/office", office);
+//user access route
+app.use("/api/access",access);
 
 //market routes
 app.use("/api/market_property_type", market_property_type);

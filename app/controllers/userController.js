@@ -6,6 +6,9 @@ const User = db.user;
 const table = "users";
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
+const userAccess_ = require("../models/userAccess");
+
+
 async function getAllUsers(req, res) {
   try {
     const queryString = `SELECT
@@ -123,7 +126,7 @@ async function changePassword(req, res) {
   const newPassword = reqJson.password;
   try {
 
-    const query = `SELECT * FROM ${table} WHERE id = ${userId}`;
+    const query = `SELECT id FROM ${table} WHERE id = ${userId}`;
     const user_ = await db.executeQuery(query);
     if (!user_) {
       return res.status(404).send({ message: "User Not found." });
@@ -131,7 +134,7 @@ async function changePassword(req, res) {
 
       const hashedNewPassword = await bcrypt.hash(newPassword, 10);
       const change_query = `
-      UPDATE ${table} SET password ='${hashedNewPassword}', default_pass = 'NO', first_login = 'FALSE' WHERE id = ${userId}`;
+      UPDATE ${table} SET password ='${hashedNewPassword}', default_pass = 0, first_login = 0 WHERE id = ${userId}`;
       const result_ = await db.executeQuery(change_query);
       res.send(result_);
     }
@@ -139,15 +142,32 @@ async function changePassword(req, res) {
     console.error(err);
     res.status(400).send({ error: "Server error: Error grabbing user" });
   }
-  
-
+}
+async function userAccessCtrl(req,res) { 
+  const reqJson = db.filterReqJson(req.body, userAccess_);
+  const userId = reqJson.id;
+  try {
+    console.log(userId)
+    // const query = `SELECT * FROM ${table} WHERE id = ${userId}`;
+    // const user_ = await db.executeQuery(query);
+    // if (!user_) {
+    //   return res.status(404).send({ message: "User Not found." });
+    // } else { 
+    //   res.send(user_);
+    // }
+  } catch (err) {
+    console.error(err);
+    res.status(400).send({ error: "Server error: Error grabbing user" });
+  }
 }
 
 module.exports = {
-  findUser,
+ 
   getAllUsers,
   getAllUsersRoles,
   getUsersRequest,
   getSyslogs,
-  changePassword
+  changePassword,
+  userAccessCtrl,
+  findUser,
 };
