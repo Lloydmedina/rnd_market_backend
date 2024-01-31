@@ -40,7 +40,7 @@ jobs:
 
     steps:
     - name: Create SSH directory
-      run: mkdir -p ~/.ssh
+      run: mkdir /rnd_market ssh
 
     - name: Install SSH key
       run: echo "${{ secrets.SSH_KEY }}" > ~/rnd_market/ssh/id_rsa && chmod 600 ~/rnd_market/ssh/id_rsa
