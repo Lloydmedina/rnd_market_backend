@@ -34,7 +34,8 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-
+      - name: Docker build
+        run: docker build --rm=false --build-arg COMMIT_ID=$GITHUB_SHA -t ghcr.io/<Lloydmedina>/RND_market_backend .
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
