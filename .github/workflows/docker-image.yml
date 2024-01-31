@@ -1,8 +1,10 @@
 name: rnd
+
 on:
   push:
     branches:
       - dev
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -37,11 +39,14 @@ jobs:
     needs: build
 
     steps:
+    - name: Create SSH directory
+      run: mkdir -p ~/.ssh
+
     - name: Install SSH key
-      run: echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
+      run: echo "${{ secrets.SSH_KEY }}" > ~/rnd_market/ssh/id_rsa && chmod 600 ~/rnd_market/ssh/id_rsa
 
     - name: Copy SSH key to known_hosts
-      run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+      run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/rnd_market/ssh/known_hosts
 
     - name: SSH into the Droplet, pull Docker image, and restart container
       run: |
