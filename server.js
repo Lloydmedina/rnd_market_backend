@@ -75,7 +75,7 @@ require('./app/routes/auth.routes')(app);
 //system logs
 app.use("/api/system_logs", system_logs);
 // set port, listen for requests
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
