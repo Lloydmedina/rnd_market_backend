@@ -57,6 +57,9 @@ function buildQueryString(reqJson,table,method) {
         case "DELETE":
             
             break;
+        case "AUTH":
+                queryString = `SELECT * FROM users WHERE username = '${reqJson.username}' AND password = '${reqJson.password}'`;
+                break;
 
         default:
             break;

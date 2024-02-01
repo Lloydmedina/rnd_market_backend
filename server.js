@@ -4,6 +4,8 @@ const cookieSession = require("cookie-session");
 const db = require("./app/models");
 const Role = db.role;
 const app = express();
+const login_ = require('./app/routes/login_auth');
+
 const users = require('./app/routes/user');
 const employee = require('./app/routes/employee');
 const person = require('./app/routes/person');
@@ -22,7 +24,8 @@ const market_payment_schedule = require('./app/routes/market_payment_schedule');
 const market_payment_addons = require('./app/routes/market_payment_addons');
 const market_inspect_logs = require('./app/routes/market_inspect_logs');
 
-const system_logs = require('./app/routes/sys_logs')
+const system_logs = require('./app/routes/sys_logs');
+
 app.use(cors());
 
 // parse requests of content-type - application/json
@@ -70,7 +73,7 @@ app.use("/api/market_payment_addons", market_payment_addons);
 app.use("/api/market_inspect_logs", market_inspect_logs);
 
 //auth route
-require('./app/routes/auth.routes')(app);
+app.use("/api/auth",login_);
 
 //system logs
 app.use("/api/system_logs", system_logs);

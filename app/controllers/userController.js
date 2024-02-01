@@ -8,7 +8,6 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const userAccess_ = require("../models/userAccess");
 
-
 async function getAllUsers(req, res) {
   try {
     const queryString = `SELECT
@@ -169,5 +168,5 @@ module.exports = {
   getSyslogs,
   changePassword,
   userAccessCtrl,
-  findUser,
+  findUser
 };

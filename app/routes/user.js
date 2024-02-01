@@ -9,4 +9,5 @@ router.get("/:uId", users_.findUser);
 router.get("/user_logs", users_.getSyslogs);
 router.post("/reset_password", users_.changePassword);
 router.get("/user_access", users_.userAccessCtrl);
+
 module.exports = router
