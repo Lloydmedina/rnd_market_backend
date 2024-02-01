@@ -16,11 +16,12 @@ async function userAccessCtrl(req,res) {
         //GET ACCESS ITEMS
         const menu_query = `
         SELECT 
-        st.*,
+        st.menu_id,
+				st.role_id,
         am.label,
         am.office_id,
         JSON_ARRAYAGG(JSON_OBJECT('label', ai.label,'icon', ai.icon, 'routerLink',ai.routerLink )) as items
-        FROM access_setup st 
+        FROM access_setup st
         INNER JOIN access_menu am ON am.id = st.menu_id
         INNER JOIN access_items ai ON ai.menu_id = am.id
         WHERE st.role_id = ${user_[0].roleId}
