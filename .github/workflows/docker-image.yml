@@ -1,4 +1,4 @@
-name: rnd
+name: rnd_market
 
 on:
   push:
