@@ -40,7 +40,7 @@ jobs:
 
     steps:
     - name: Create SSH directory
-      run: mkdir -p ~/rnd_market/ssh
+      run: mkdir /rnd_market ssh
 
     - name: Install SSH key
       run: echo "${{ secrets.SSH_KEY }}" > ~/rnd_market/ssh/id_rsa && chmod 600 ~/rnd_market/ssh/id_rsa
@@ -50,7 +50,7 @@ jobs:
 
     - name: SSH into the Droplet, pull Docker image, and restart container
       run: |
-        ssh -o StrictHostKeyChecking=no -i ~/rnd_market/ssh/id_rsa ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} << 'EOF'
+        ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} << 'EOF'
           docker pull ${{ secrets.DOCKERHUB_USERNAME }}/rnd_market_backend
           docker stop rnd_market_backend || true
           docker rm rnd_market_backend || true
