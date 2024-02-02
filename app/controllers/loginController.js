@@ -18,17 +18,19 @@ async function login(req, res) {
 
         const queryString = `SELECT * FROM user WHERE username = '${username}'`;
 
-        const user_ = await db.executeQuery(queryString);
+        var user_ = await db.executeQuery(queryString);
         
 
       if (user_.length > 0) {
         const isValid = await bcrypt.compare(password,user_[0]['password']);
             if (isValid) {
-              res.status(200);
+             // res.status(200);
                 res.send({ user_ });
             } else {
-              res.status(400);
-            res.send({status: "Password incorrect", success: false});
+                // res.status(400);
+                user_ = [];
+                res.send({ user_ });
+           // res.send({status: "Password incorrect", success: false});
             }
         }else {
             res.status(400);
