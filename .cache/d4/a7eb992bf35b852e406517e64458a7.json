@@ -1,0 +1,1 @@
+{"id":"Tg08","dependencies":[{"name":"V:\\projects\\market sys\\RND_market_backend\\package.json","includedInParent":true,"mtime":1706855948155}],"generated":{"js":"module.exports=((e,r)=>{return e.define(\"roles\",{id:{type:r.INTEGER,primaryKey:!0},name:{type:r.STRING}})});"},"sourceMaps":null,"error":null,"hash":"7c5fb10c8474d7a7ec8f0a044b59b98b","cacheData":{"env":{}}}
