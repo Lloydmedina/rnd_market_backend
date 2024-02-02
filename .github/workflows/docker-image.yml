@@ -54,5 +54,5 @@ jobs:
           docker pull ${{ secrets.DOCKERHUB_USERNAME }}/rnd_market_backend
           docker stop rnd_market_backend || true
           docker rm rnd_market_backend || true
-          docker run -d --name rnd_market_backend -p 6002:3000 ${{ secrets.DOCKERHUB_USERNAME }}/rnd_market_backend
+          docker run -d --name rnd_market_backend -p 8002:3000 ${{ secrets.DOCKERHUB_USERNAME }}/rnd_market_backend
         EOF
