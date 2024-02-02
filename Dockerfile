@@ -3,7 +3,7 @@ FROM node:20.0.0-alpine as builder
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm install
+RUN npm install --force
 
 COPY . .
 # Stage 2: Use a lighter-weight nginx image for the production environment
