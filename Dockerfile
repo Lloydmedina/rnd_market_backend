@@ -4,7 +4,7 @@ FROM node:20.0.0-alpine as builder
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm install -g npm@latest 
+
 RUN npm install --verbose --force --no-optional --engine-strict=false
 
 COPY . .
