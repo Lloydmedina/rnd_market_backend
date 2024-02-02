@@ -12,10 +12,8 @@ COPY --chown=node:node --from=development /usr/src/app/node_modules ./node_modul
 COPY --chown=node:node . .
 
 # Run the build command which creates the production bundle
+RUN npm install
 RUN npm run build
-
-# Set NODE_ENV environment variable
-ENV NODE_ENV production
 
 # Running `npm ci` removes the existing node_modules directory and passing in --only=production ensures that only the production dependencies are installed. This ensures that the node_modules directory is as optimized as possible
 RUN npm ci --only=production && npm cache clean --force
@@ -36,5 +34,5 @@ COPY --chown=node:node --from=build /usr/src/app/dist ./dist
 # RUN npm install -g pm2 
 
 # Start the server using the production build
-CMD [ "node", "dist/src/main.js" ]
+CMD [ "node", "server.js" ]
 # CMD ["pm2-runtime", "process.yml"]
