@@ -31,9 +31,9 @@ jobs:
           context: .
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/agriculture-backend:latest
-          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/agriculture-backend:buildcache
-          cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/agriculture-backend:buildcache,mode=max
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/rnd_market_backend:latest
+          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/rnd_market_backend:buildcache
+          cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/rnd_market_backend:buildcache,mode=max
 
   deploy:
     needs: docker
@@ -48,7 +48,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{secrets.SSH_KEY}}
           script: |
-            cd deployment-scripts/city-agriculture/ 
-            docker compose pull agriculture_backend
-            docker compose up agriculture_backend -d
-            docker compose logs --tail 20 agriculture_backend
+            cd deployment-scripts/rnd_market_backend/ 
+            docker compose pull rnd_market_backend
+            docker compose up rnd_market_backend -d
+            docker compose logs --tail 20 rnd_market_backend
