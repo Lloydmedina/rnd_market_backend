@@ -1,5 +1,5 @@
 # Stage 1: Build the application
-FROM node:latest as builder
+FROM node:20.0.0-alpine As development
 
 WORKDIR /app
 
