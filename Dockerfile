@@ -14,8 +14,6 @@ RUN npm run build
 FROM nginx:alpine
 EXPOSE 3000
 
-# Copy the built assets from the builder stage to the final image
-COPY --from=builder /app/dist /usr/share/nginx/html
 
 # Set the default command to start nginx
 CMD ["nginx", "-g", "daemon off;"]
