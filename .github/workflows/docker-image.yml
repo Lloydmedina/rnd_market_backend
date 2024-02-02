@@ -1,4 +1,4 @@
-name: ci
+name: market backend
 
 on:
   push:
