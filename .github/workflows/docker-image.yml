@@ -1,75 +1,63 @@
-name: rnd_backend
+name: rnd_market
 
 on:
   push:
     branches:
-      - 'dev'
+      - dev
 
 jobs:
-  docker:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Install Node.js
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y curl
-          curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-          sudo apt-get install -y nodejs
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v2
 
-      - name: Display Node.js Version
-        run: node --version
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
+    - name: Set up Node.js 18.19
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18.19
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Build and push
-        uses: docker/build-push-action@v3
-        with:
-          context: .
-          builder: ${{ steps.buildx.outputs.name }}
-          push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/rnd_market_backend
-          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/rnd_market_backend:buildcache
-          cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/rnd_market_backend:buildcache,mode=max
-
-      - name: Debugging Build
-        run: |
-          echo "Current Directory: $(pwd)"
-          echo "Files in Directory: $(ls -a)"
-          echo "Environment Variables: $(env)"
-          npm install
-          npm run build
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        platforms: linux/amd64,linux/arm64
+        push: true
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/rnd_market_backend
 
   deploy:
-    needs: docker
     runs-on: ubuntu-latest
 
-    steps:
-      - name: Deploy Rnd Market Frontend
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          port: 22
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            sudo apt-get update
-            sudo apt-get install -y docker-compose
+    needs: build
 
-            cd deployment-scripts/rnd_market/
-            docker-compose pull rnd_market_backend
-            docker-compose up -d rnd_market_backend
-            docker-compose logs --tail 20 rnd_market_backend
+    steps:
+    - name: Create SSH directory
+      run: mkdir -p ~/rnd_market/ssh
+
+    - name: Install SSH key
+      run: echo "${{ secrets.SSH_KEY }}" > ~/rnd_market/ssh/id_rsa && chmod 600 ~/rnd_market/ssh/id_rsa
+
+    - name: Copy SSH key to known_hosts
+      run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/rnd_market/ssh/known_hosts
+
+    - name: SSH into the Droplet, pull Docker image, and restart container
+      run: |
+        ssh -o StrictHostKeyChecking=no -i ~/rnd_market/ssh/id_rsa ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} << 'EOF'
+          docker pull ${{ secrets.DOCKERHUB_USERNAME }}/rnd_market_backend
+          docker stop rnd_market_backend || true
+          docker rm rnd_market_backend || true
+          docker run -d --name rnd_market_backend -p 8002:3000 ${{ secrets.DOCKERHUB_USERNAME }}/rnd_market_backend
+        EOF
