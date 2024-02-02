@@ -40,7 +40,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       -
-        name: Deploy Health Frontend
+        name: Deploy backend
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
