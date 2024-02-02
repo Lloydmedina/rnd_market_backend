@@ -31,9 +31,9 @@ jobs:
           context: .
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/rnd_market_backend:latest
-          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/rnd_market_backend:buildcache
-          cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/rnd_market_backend:buildcache,mode=max
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/market_backend:latest
+          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/market_backend:buildcache
+          cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/market_backend:buildcache,mode=max
 
   deploy:
     needs: docker
@@ -49,6 +49,6 @@ jobs:
           key: ${{secrets.SSH_KEY}}
           script: |
             cd deployment-scripts/rnd_market/ 
-            docker compose pull rnd_market_backend
-            docker compose up rnd_market_backend -d
-            docker compose logs --tail 20 rnd_market_backend
+            docker compose pull market_backend
+            docker compose up market_backend -d
+            docker compose logs --tail 20 market_backend
