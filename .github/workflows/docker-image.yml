@@ -48,7 +48,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{secrets.SSH_KEY}}
           script: |
-            cd deployment-scripts/rnd_market_backend/ 
+            cd deployment-scripts/rnd_market/ 
             docker compose pull rnd_market_backend
             docker compose up rnd_market_backend -d
             docker compose logs --tail 20 rnd_market_backend
